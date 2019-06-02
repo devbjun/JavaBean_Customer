@@ -68,7 +68,7 @@ public class Customers {
 			
 			// 주문 테이블에 정보 입력
 			SQL = "INSERT INTO " +
-					"ORDERS_TB(ORDER_SQ, ORDER_ST, ORDER_DT) " +
+					"ORDERS_TB(ORDER_SQ, ORDER_STATUS_SQ, ORDER_DT) " +
 					"VALUES ('" + _millis +  "', 0, TO_DATE('" + date.format(System.currentTimeMillis()) + "', 'YYYY-MM-DD HH24:MI:SS'))";
 			
 			relation.updateSQL(SQL);

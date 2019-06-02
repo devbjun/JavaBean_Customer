@@ -8,6 +8,6 @@ public class Main {
 		// 이곳은 프로그램 실행을 위한 메인함수만 작성하도록 합니다.
 		
 		// 커스토머용 프로그램 시작
-		new Customer(" JavaBean 1.0.1v - 카페에 오신걸 환영합니다.", "img/icon/java_bean.png", 500, 700);
+		new Customer(" JavaBean 1.0.2v - 카페에 오신걸 환영합니다.", "img/icon/java_bean.png", 500, 700);
 	}
 }

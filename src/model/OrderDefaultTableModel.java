@@ -1,10 +1,10 @@
-package component;
+package model;
 
 import javax.swing.table.DefaultTableModel;
 
 @SuppressWarnings("serial")
-public class MutableDefaultTableModel extends DefaultTableModel {
-	public MutableDefaultTableModel(String[][] _columns, String[] _rows) {
+public class OrderDefaultTableModel extends DefaultTableModel {
+	public OrderDefaultTableModel(String[][] _columns, String[] _rows) {
 		super(_columns, _rows);
 	}
 	

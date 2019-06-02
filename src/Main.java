@@ -1,4 +1,4 @@
-import frame.Client_v2;
+import frame.Customer;
 
 public class Main {
 	public static void main(String[] args) {
@@ -7,6 +7,7 @@ public class Main {
 		// 나머지 프레임 및 기타 작업들은 패키지에 맞게 클래스 선언해서 사용해주세요.
 		// 이곳은 프로그램 실행을 위한 메인함수만 작성하도록 합니다.
 		
-		new Client_v2("JavaBean v1.0.0", 500, 700);
+		// 커스토머용 프로그램 시작
+		new Customer(" JavaBean 1.0.1v - 카페에 오신걸 환영합니다.", "img/icon/java_bean.png", 500, 700);
 	}
 }

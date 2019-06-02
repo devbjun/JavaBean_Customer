@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class BasicFrame extends JFrame {
+	
 	public BasicFrame(String _title, int _width, int _height) {
 		
 		setTitle(_title);

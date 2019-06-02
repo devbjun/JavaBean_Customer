@@ -28,7 +28,7 @@ import org.json.simple.JSONObject;
 
 import frame.component.JBScrollBar;
 import frame.component.JBTableCellRenderer;
-import jdbc.oracle.Customers;
+import jdbc.oracle.customer.Customers;
 import model.OrderDefaultTableModel;
 
 @SuppressWarnings("serial")
@@ -299,6 +299,19 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 		
 		// bDelete 이벤트 처리
 		if (e.getSource().equals(bDelete)) {
+			
+			// 삭제할 목록이 선택되지 않은 경우 경고 메시지를 띄운다.
+			if (tOrder.getSelectedRow() == -1) {
+				JOptionPane.showConfirmDialog(
+						null,
+						"삭제할 장바구니 목록을 선택해주세요.", 
+						"JavaBean - 경고", 
+						JOptionPane.DEFAULT_OPTION, 
+						JOptionPane.WARNING_MESSAGE
+				);
+				
+				return;
+			}
 			
 			// 선택한 행 삭제
 			mTable.removeRow(tOrder.getSelectedRow());

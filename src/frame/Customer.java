@@ -22,7 +22,7 @@ import org.json.simple.JSONObject;
 import frame.component.JBTabbedPaneUI;
 import frame.panel.CategoryPanel;
 import frame.panel.OrderPanel;
-import jdbc.oracle.Items;
+import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")
 public class Customer extends BasicFrame {
@@ -46,7 +46,7 @@ public class Customer extends BasicFrame {
 		
 		// 프로그램 종료 전 메시지 띄우기
 		addWindowListener(new WindowAdapter() {
-	      	  public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
 	      		if (JOptionPane.showConfirmDialog(null,
     					"프로그램을 종료하시겠습니까?",
     					"JavaBean - 프로그램 종료",
@@ -56,11 +56,10 @@ public class Customer extends BasicFrame {
 	      			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         		}
 	      		else {
-	      			
 	      			// 프로그램 종료
 	      			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	      		}
-	      	  }
+			}
 	    });
 	}
 	

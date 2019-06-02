@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import org.json.simple.JSONObject;
 
 import frame.component.JBScrollBar;
-import jdbc.oracle.Items;
+import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")
 public class CategoryPanel extends JScrollPane {

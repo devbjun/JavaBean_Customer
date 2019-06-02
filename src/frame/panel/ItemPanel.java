@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 
 import org.json.simple.JSONObject;
 
-import jdbc.oracle.Items;
+import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")
 public class ItemPanel extends JPanel implements ActionListener {
@@ -391,7 +391,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 					null, 
 					cbSize.getSelectedItem().toString() + " 사이즈를 선택하셨습니다.\n" +
 					"음료 한잔당 " + optionPrice + " 원이 부과됩니다.\n" +
-					"\n※ 해당 옵션은 선택한 수량에 모두 동일하게 적용됩니다.", "JavaBean - 안내 사항", JOptionPane.WARNING_MESSAGE);
+					"\n※ 해당 옵션은 선택한 수량에 모두 동일하게 적용됩니다.", "JavaBean - 사이즈 선택", JOptionPane.WARNING_MESSAGE);
 
 		}
 		
@@ -405,7 +405,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(
 						null, 
 						"사이즈가 선택되지 않았습니다.",
-						"JavaBean - 안내 사항", 
+						"JavaBean - 경고", 
 						JOptionPane.WARNING_MESSAGE);
 				return;
 			}
@@ -417,7 +417,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 				JOptionPane.showMessageDialog(
 						null, 
 						"수량이 올바르지 않습니다.",
-						"JavaBean - 안내 사항", 
+						"JavaBean - 경고", 
 						JOptionPane.WARNING_MESSAGE);
 				return;
 			}

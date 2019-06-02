@@ -1,9 +1,11 @@
-package jdbc.oracle;
+package jdbc.oracle.customer;
 
 import java.sql.SQLException;
 import java.util.Vector;
 
 import org.json.simple.JSONObject;
+
+import jdbc.oracle.Relation;
 
 public class Items {
 	

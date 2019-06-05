@@ -1,4 +1,4 @@
-package frame.component;
+package customer.frame.component;
 
 import java.awt.Color;
 import java.awt.Graphics;

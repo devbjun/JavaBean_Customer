@@ -1,4 +1,4 @@
-package model;
+package customer.frame.model;
 
 import javax.swing.table.DefaultTableModel;
 

@@ -1,4 +1,4 @@
-package frame.panel;
+package customer.frame.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

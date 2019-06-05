@@ -1,4 +1,4 @@
-package frame;
+package customer;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -19,22 +20,26 @@ import javax.swing.JTabbedPane;
 
 import org.json.simple.JSONObject;
 
-import frame.component.JBTabbedPaneUI;
-import frame.panel.CategoryPanel;
-import frame.panel.OrderPanel;
+import customer.frame.component.JBTabbedPaneUI;
+import customer.frame.panel.CategoryPanel;
+import customer.frame.panel.OrderPanel;
+import customer.frame.BasicFrame;
+
+import jdbc.JDBCManager;
 import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")
 public class Customer extends BasicFrame {
 	
+	private static String pIcon = "img/icon/java_bean.png";
 	private JTabbedPane tpCategory;
 
-	public Customer(String _title, String _iPath, int _width, int _height) {
+	public Customer(String _title, int _width, int _height) {
 		super(_title, _width, _height);
 		// TODO Auto-generated constructor stub
 		
 		// 아이콘 설정
-		setIconImage(Toolkit.getDefaultToolkit().getImage(_iPath));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(pIcon));
 		
 		// 패널 등록
 		setNorthPanel();
@@ -55,9 +60,24 @@ public class Customer extends BasicFrame {
 	      			// 프로그램 종료 방지
 	      			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         		}
-	      		else {
-	      			// 프로그램 종료
-	      			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	      		else {	
+	      			try {
+	      				
+	      				// 프로그램 종료시 JDBC 연결 해제
+	      				JDBCManager jdbc = JDBCManager.getJDBCManager();
+						jdbc.setClose();
+						
+						// 프로그램 종료
+		      			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+						
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 	      		}
 			}
 	    });
@@ -155,5 +175,19 @@ public class Customer extends BasicFrame {
 		
 		pSouth.add(new OrderPanel(getWidth(), getHeight()));
 		add(pSouth, BorderLayout.SOUTH);
+	}
+	
+	/**
+	 * 커스토머 프로그램 실행
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		// 이곳에 메인 프레임을 선언해주세요.
+		// 나머지 프레임 및 기타 작업들은 패키지에 맞게 클래스 선언해서 사용해주세요.
+		// 이곳은 프로그램 실행을 위한 메인함수만 작성하도록 합니다.
+		
+		// 커스토머용 프로그램 시작
+		new Customer(" JavaBean 1.0.5v - 카페에 오신걸 환영합니다.", 500, 700);
 	}
 }

@@ -1,4 +1,4 @@
-package frame.panel;
+package customer.frame.panel;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,7 +13,8 @@ import javax.swing.JScrollPane;
 
 import org.json.simple.JSONObject;
 
-import frame.component.JBScrollBar;
+import customer.frame.component.JBScrollBar;
+
 import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")

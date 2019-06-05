@@ -1,4 +1,4 @@
-package frame.panel;
+package customer.frame.panel;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,10 +26,11 @@ import javax.swing.table.TableColumnModel;
 
 import org.json.simple.JSONObject;
 
-import frame.component.JBScrollBar;
-import frame.component.JBTableCellRenderer;
+import customer.frame.component.JBScrollBar;
+import customer.frame.component.JBTableCellRenderer;
+import customer.frame.model.OrderDefaultTableModel;
+
 import jdbc.oracle.customer.Customers;
-import model.OrderDefaultTableModel;
 
 @SuppressWarnings("serial")
 public class OrderPanel extends JPanel implements ActionListener, TableModelListener, AdjustmentListener {

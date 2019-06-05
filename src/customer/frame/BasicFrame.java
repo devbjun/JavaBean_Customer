@@ -1,4 +1,4 @@
-package frame;
+package customer.frame;
 
 import javax.swing.JFrame;
 

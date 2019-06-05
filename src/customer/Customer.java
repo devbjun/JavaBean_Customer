@@ -12,7 +12,6 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -52,35 +51,35 @@ public class Customer extends BasicFrame {
 		// 프로그램 종료 전 메시지 띄우기
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-	      		if (JOptionPane.showConfirmDialog(null,
-    					"프로그램을 종료하시겠습니까?",
-    					"JavaBean - 프로그램 종료",
-    					JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
-	      			
-	      			// 프로그램 종료 방지
-	      			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        		}
-	      		else {	
-	      			try {
-	      				
-	      				// 프로그램 종료시 JDBC 연결 해제
-	      				JDBCManager jdbc = JDBCManager.getJDBCManager();
+				if (JOptionPane.showConfirmDialog(null,
+		    			"프로그램을 종료하시겠습니까?",
+		    			"JavaBean - 프로그램 종료",
+		    			JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+			      			
+			      		// 프로그램 종료 방지
+			      		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+			    }
+			    else {
+			    	try {
+			      				
+			    		// 프로그램 종료시 JDBC 연결 해제
+			    		JDBCManager jdbc = JDBCManager.getJDBCManager();
 						jdbc.setClose();
-						
+								
 						// 프로그램 종료
-		      			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-						
+				      	setDefaultCloseOperation(EXIT_ON_CLOSE);
+								
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-						
+								
 					} catch (ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-	      		}
+			    }
 			}
-	    });
+		});
 	}
 	
 	/**
@@ -176,6 +175,7 @@ public class Customer extends BasicFrame {
 		pSouth.add(new OrderPanel(getWidth(), getHeight()));
 		add(pSouth, BorderLayout.SOUTH);
 	}
+
 	
 	/**
 	 * 커스토머 프로그램 실행

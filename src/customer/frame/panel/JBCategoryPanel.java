@@ -8,22 +8,19 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import org.json.simple.JSONObject;
 
-import customer.frame.component.JBScrollBar;
-
 import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")
-public class CategoryPanel extends JScrollPane {
+public class JBCategoryPanel extends JScrollPane {
 	
 	private Vector<JSONObject> lItem;
 	private JPanel pItemList;
 	
-	public CategoryPanel(String _name, int _width, int _height) {
+	public JBCategoryPanel(String _name, int _width, int _height) {
         
         // 오류 처리
         try {
@@ -36,7 +33,7 @@ public class CategoryPanel extends JScrollPane {
 			// 아이템별 패널을 생성한 후 해당 패널을 리스트 패널에 담고 
 			for (JSONObject _json : lItem) {
 				pItemList.add(
-					new ItemPanel(
+					new JBItemPanel(
 						_name,
 						_json.get("품명").toString(), _json.get("단가").toString(),
 						_width,
@@ -55,9 +52,8 @@ public class CategoryPanel extends JScrollPane {
 	        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 	        
 	        // JScrollPane 스크롤 가능, 스크롤바 숨김 처리
-	        setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-	        setVerticalScrollBar(new JBScrollBar(JScrollBar.VERTICAL));
-			
+	        setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
 	        // JScrollPane에 pItemList 컴포넌트를 등록
 			setViewportView(pItemList);
 		

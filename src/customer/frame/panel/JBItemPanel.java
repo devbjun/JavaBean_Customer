@@ -21,7 +21,7 @@ import org.json.simple.JSONObject;
 import jdbc.oracle.customer.Items;
 
 @SuppressWarnings("serial")
-public class ItemPanel extends JPanel implements ActionListener {
+public class JBItemPanel extends JPanel implements ActionListener {
 	
 	// 옵션 관련 컴포넌트
 	private JComboBox<String> cbTemp, cbSize;
@@ -42,6 +42,9 @@ public class ItemPanel extends JPanel implements ActionListener {
 	// 초기화 완료 여부
 	private boolean isInit;
 	
+	private JButton bQuantityMinus;
+	private JButton bQuantityPlus;
+	
 	/**
 	 * 물품 패널 등록
 	 * @param _category
@@ -51,7 +54,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 	 * @param _height
 	 */
 	@SuppressWarnings("unchecked")
-	public ItemPanel(String _category, String _name, String _price, int _width, int _height) {
+	public JBItemPanel(String _category, String _name, String _price, int _width, int _height) {
 		
 		// 기본 레이아웃 설정
 		setLayout(new BorderLayout());
@@ -72,13 +75,17 @@ public class ItemPanel extends JPanel implements ActionListener {
 			Vector<JSONObject> iDetail = Items.getItemDetailList(_name);
 			option = new JSONObject();
 			
+			// ICE / TALL
+			// ICE / GRANDE
+			// ICE / VENTI
+			
 			// 옵션 개수만큼 반복하며 JSON 정보를 가져온다
 			for (JSONObject _json : iDetail) {
 				
 				// '옵션'이라는 키에 해당하는 값을 가져와 " & "로 파싱한다.
 				String[] split = _json.get("옵션").toString().split(" & ");
 				
-				// 파싱한 문자열의 좌측에 해당하는 키값이 option에 없을 경우, 해당 키값에 Vector<String> 객체를 값으로 할당한다.
+				// 파싱한 문자열의 좌측에 해당하는 키값이 option에 없을 경우, 해당 키값에 JSONObject 객체를 값으로 할당한다.
 				if (option.get(split[0]) == null) {
 					option.put(split[0], new JSONObject()); 
 				}
@@ -186,7 +193,8 @@ public class ItemPanel extends JPanel implements ActionListener {
 		cbTemp.setBounds(80, 43, 85, 20);
 		((JLabel) cbTemp.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		
-		// cbTemp에 아이템 등록
+		// cbTemp에 아이템 등록 
+		// Ex) [ "ICE", "HOT" ]
 		for (Object _temp : option.keySet().toArray()) {
 			cbTemp.addItem(_temp.toString());
 		}
@@ -219,7 +227,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 		lQuantityName.setForeground(Color.WHITE);
 		
 		// 수량 감소 버튼
-		JButton bQuantityMinus = new JButton("-");
+		bQuantityMinus = new JButton("-");
 		bQuantityMinus.setBounds(72, 103, 20, 20);
 		
 		// 디자인 설정
@@ -229,12 +237,9 @@ public class ItemPanel extends JPanel implements ActionListener {
 		bQuantityMinus.setForeground(Color.WHITE);
 		
 		// 버튼 클릭시 수량 감소
-		bQuantityMinus.addActionListener((e) -> {
-			int quantity = Integer.parseInt(lQuantity.getText());
-			
-			if (quantity - 1 < 0) { return; }
-			lQuantity.setText(String.valueOf(--quantity));
-		});
+		bQuantityMinus.addActionListener(this);
+		
+		// model & view & controller
 		
 		// 수량 표기 레이블
 		lQuantity = new JLabel("0");
@@ -242,7 +247,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 		lQuantity.setForeground(Color.WHITE);
 		
 		// 수량 증가 버튼
-		JButton bQuantityPlus = new JButton("+");
+		bQuantityPlus = new JButton("+");
 		bQuantityPlus.setBounds(148, 103, 20, 20);
 		
 		// 디자인 설정
@@ -252,12 +257,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 		bQuantityPlus.setForeground(Color.WHITE);
 		
 		// 버튼 클릭시 수량 증가
-		bQuantityPlus.addActionListener((e) -> {
-			int quantity = Integer.parseInt(lQuantity.getText());
-			
-			if (quantity + 1 >= 100) { return; }
-			lQuantity.setText(String.valueOf(++quantity));
-		});
+		bQuantityPlus.addActionListener(this);
 					
 		
 		/*
@@ -395,20 +395,24 @@ public class ItemPanel extends JPanel implements ActionListener {
 
 		}
 		
+		// bQuantityPlus 이벤트 처리
+		if (e.getSource().equals(bQuantityPlus)) {
+			int quantity = Integer.parseInt(lQuantity.getText());
+			
+			if (quantity + 1 >= 100) { return; }
+			lQuantity.setText(String.valueOf(++quantity));
+		}
+
+		// bQuantityMinus 이벤트 처리
+		if (e.getSource().equals(bQuantityMinus)) {
+			int quantity = Integer.parseInt(lQuantity.getText());
+			
+			if (quantity - 1 < 0) { return; }
+			lQuantity.setText(String.valueOf(--quantity));
+		}
+		
 		// bOrder 이벤트 처리
 		if (e.getSource().equals(bOrder)) {
-			
-			// 사이즈 미선택시 안내 메시지 출력
-			if (cbSize.getSelectedItem() == null) {
-				
-				// 주의사항 표기
-				JOptionPane.showMessageDialog(
-						null, 
-						"사이즈가 선택되지 않았습니다.",
-						"JavaBean - 경고", 
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			}
 			
 			// 수량 미선택시 안내 메시지 출력
 			if (lQuantity.getText().equals("0")) {
@@ -422,12 +426,14 @@ public class ItemPanel extends JPanel implements ActionListener {
 				return;
 			}
 			
+			// 초기화 완료 변수를 false로 설정
 			isInit = false;
 			
 			// 장바구니에 담기 위한 배열 변수 선언
 			String[] item = new String[7];
 			
 			// 정보 입력
+			// 품명, 핫 or 아이스, 사이즈, 가격, 옵션단가, 수량, 합계 ((가격 + 옵션단가) * 수량)
 			item[0] = name;
 			item[1] = cbTemp.getSelectedItem().toString();
 			item[2] = cbSize.getSelectedItem().toString();
@@ -437,7 +443,7 @@ public class ItemPanel extends JPanel implements ActionListener {
 			item[6] = String.valueOf((Integer.parseInt(item[3]) + Integer.parseInt(item[4])) * Integer.parseInt(item[5]));
 
 			// 주문 클래스에 작업 설정
-			OrderPanel pOrder = new OrderPanel();
+			JBOrderPanel pOrder = new JBOrderPanel();
 			
 			// 주문 추가
 			pOrder.setRow(item);

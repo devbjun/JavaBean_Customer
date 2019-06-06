@@ -26,16 +26,15 @@ import javax.swing.table.TableColumnModel;
 
 import org.json.simple.JSONObject;
 
-import customer.frame.component.JBScrollBar;
 import customer.frame.component.JBTableCellRenderer;
-import customer.frame.model.OrderDefaultTableModel;
+import customer.frame.model.JBOrderDefaultTableModel;
 
 import jdbc.oracle.customer.Customers;
 
 @SuppressWarnings("serial")
-public class OrderPanel extends JPanel implements ActionListener, TableModelListener, AdjustmentListener {
+public class JBOrderPanel extends JPanel implements ActionListener, TableModelListener, AdjustmentListener {
 	
-	private static OrderDefaultTableModel mTable;
+	private static JBOrderDefaultTableModel mTable;
 	private static JScrollPane spOrder;
 	private static boolean autoScroll;
 	
@@ -48,14 +47,14 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 	
 	
 	// 기본 생성자 등록
-	public OrderPanel() {}
+	public JBOrderPanel() {}
 	
 	/**
 	 * 주문관련 테이블 및 버튼 객체 생성자 선언
 	 * @param _width
 	 * @param _height
 	 */
-	public OrderPanel(int _width, int _height) {
+	public JBOrderPanel(int _width, int _height) {
 		
 		width = _width;
 		height = _height;
@@ -84,20 +83,21 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 		// Center Panel 선언
 		JPanel pCenter = new JPanel(null);
 		
-		// 테이블 선언
+		// 테이블 헤더 선언
 		String[] hOrder = {
 			"품명", "핫 / 아이스", "사이즈", "단가", "옵션 단가", "수량", "합계"	
 		};
-		String[][] cOrder = {};
-		
-		mTable = new OrderDefaultTableModel(cOrder, hOrder);
+
+		// 테이블 모델 및 테이블 정의
+		mTable = new JBOrderDefaultTableModel(null, hOrder);
 		tOrder = new JTable(mTable);
 		
-		// 테이블 헤더 순서 편집 불가 설정
+		// 테이블 헤더 순서 편집  및 사이즈 불가 설정
+		tOrder.getTableHeader().setResizingAllowed(false);
 		tOrder.getTableHeader().setReorderingAllowed(false);
 				
 		// 테이블 셀 정렬 설정
-		boolean[] cAlign = { true, true, true, false, false, true, false};
+		boolean[] cAlign = { true, true, true, true, false, true, false};
 		for (int _h = 0; _h < hOrder.length; _h++) {
 			// 테이블 셀 설정
 			tOrder.getColumn(hOrder[_h]).setCellRenderer(
@@ -120,7 +120,7 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 		tOrder.setShowGrid(false);
 		
 		// 테이블 컬럼 사이즈 자동 조절
-		int[] sColumn = { width / 3, width / 18 * 3, width / 18  * 3, width / 9, width / 18 * 3, width / 9, width / 9 };
+		int[] sColumn = { width / 3, width / 18 * 3, width / 18  * 3, width / 9, width / 9 , width / 9, width / 9 };
 		TableColumnModel mColumn = tOrder.getColumnModel(); 
 		for (int c = 0; c < tOrder.getColumnCount(); c++) {
 			mColumn.getColumn(c).setPreferredWidth(sColumn[c]); 
@@ -135,7 +135,7 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 		// 스크롤바 숨김처리
 		spOrder = new JScrollPane(
 			tOrder, 
-			JScrollPane.VERTICAL_SCROLLBAR_NEVER, 
+			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, 
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER
 		);
 		
@@ -145,9 +145,6 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 		spOrder.setOpaque(true);
 		spOrder.setBackground(Color.WHITE);
 		spOrder.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-		
-		// 스크롤 숨김 상태에서 스크롤 가능하도록 처리
-		spOrder.setVerticalScrollBar(new JBScrollBar(JScrollBar.VERTICAL));
 		
 		// 스크롤 배경 설정
 		spOrder.getViewport().setBackground(Color.DARK_GRAY);
@@ -239,7 +236,7 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 		
 		
 		/*
-		 * 주문 버튼 이벤ㅌ ㅡ등록
+		 * 주문 버튼 이벤트 등록
 		 */
 		bOrder.addActionListener(this);
 		
@@ -291,7 +288,7 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 					JOptionPane.WARNING_MESSAGE,
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				
-				// --로 할 경우 동작
+				// --를 사용해서 테이블의 맨 밑부터 상단 방향으로 컬럼을 삭제
 				for (int _r = mTable.getRowCount() - 1; _r > -1; _r--)
 					mTable.removeRow(_r);
 				
@@ -348,7 +345,7 @@ public class OrderPanel extends JPanel implements ActionListener, TableModelList
 				((Vector<String>) _list.get("quantity")).add(mTable.getValueAt(_r, 5).toString());
 			}
 			
-			// 초기화전 경고 메시지를 띄운다.
+			// 주문 처리를 위한 알람 창 표기
 			if (JOptionPane.showConfirmDialog(null,
 					"총 주문 금액은 " + lTotal.getText().split("    ")[1] + " 입니다.\n" +
 					"주문하시겠습니까?",

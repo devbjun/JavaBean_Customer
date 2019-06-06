@@ -32,9 +32,11 @@ public class JBTabbedPaneUI extends BasicTabbedPaneUI {
 		g.setColor(Color.white);
 		g.drawRoundRect(x, y, w, h, 5, 5);
 		
+		// 탭 선택 안됐을 때 디자인 처리
 		pTabbed.setBackgroundAt(tabIndex, Color.DARK_GRAY);
 		pTabbed.getTabComponentAt(tabIndex).setForeground(Color.WHITE);
-			    	  	
+		
+		// 탭 선택 됐을 때 디자인
 		if (isSelected)
 		{
 			g.setColor(Color.white);

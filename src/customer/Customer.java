@@ -20,8 +20,8 @@ import javax.swing.JTabbedPane;
 import org.json.simple.JSONObject;
 
 import customer.frame.component.JBTabbedPaneUI;
-import customer.frame.panel.CategoryPanel;
-import customer.frame.panel.OrderPanel;
+import customer.frame.panel.JBCategoryPanel;
+import customer.frame.panel.JBOrderPanel;
 import customer.frame.BasicFrame;
 
 import jdbc.JDBCManager;
@@ -33,6 +33,12 @@ public class Customer extends BasicFrame {
 	private static String pIcon = "img/icon/java_bean.png";
 	private JTabbedPane tpCategory;
 
+	/**
+	 * 커스토머 창 메인 화면
+	 * @param _title
+	 * @param _width
+	 * @param _height
+	 */
 	public Customer(String _title, int _width, int _height) {
 		super(_title, _width, _height);
 		// TODO Auto-generated constructor stub
@@ -54,14 +60,10 @@ public class Customer extends BasicFrame {
 				if (JOptionPane.showConfirmDialog(null,
 		    			"프로그램을 종료하시겠습니까?",
 		    			"JavaBean - 프로그램 종료",
-		    			JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
-			      			
-			      		// 프로그램 종료 방지
-			      		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-			    }
-			    else {
-			    	try {
-			      				
+		    			JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					
+					try {
+	      				
 			    		// 프로그램 종료시 JDBC 연결 해제
 			    		JDBCManager jdbc = JDBCManager.getJDBCManager();
 						jdbc.setClose();
@@ -77,7 +79,12 @@ public class Customer extends BasicFrame {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
+			      	
 			    }
+				else {			
+					// 프로그램 종료 방지
+		      		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+				}
 			}
 		});
 	}
@@ -92,7 +99,7 @@ public class Customer extends BasicFrame {
 		// 로고 이미지 생성
 		Image iLogo = new ImageIcon("img/logo/java_bean.png").getImage();
 		
-		// 이미지 등록
+		// 원본 이미지를 부드럽게 200x100 사이즈로 조절한 후, 등록한다
 		JLabel lLogo = new JLabel();
 		lLogo.setIcon(new ImageIcon(iLogo.getScaledInstance(200, 100, Image.SCALE_SMOOTH)));
 		
@@ -112,7 +119,6 @@ public class Customer extends BasicFrame {
 		
 		// Client Frame에 등록하기 위한 탭 패널 선언 및 카테고리 처리를 위한 lMenu 변수 선언
 		tpCategory = new JTabbedPane();
-		
 		Vector<JSONObject> lMenu;
 		
 		// 오류처리
@@ -135,7 +141,7 @@ public class Customer extends BasicFrame {
 				_tab.setHorizontalAlignment(JLabel.CENTER);
 				
 				// 카테고리 탭 팬에 탭 및 패널 추가
-				tpCategory.add(new CategoryPanel(_json.get("카테고리").toString(), getWidth() / 5 * 4, getHeight() / 5));
+				tpCategory.add(new JBCategoryPanel(_json.get("카테고리").toString(), getWidth() / 5 * 4, getHeight() / 5));
 				tpCategory.setTabComponentAt(tpCategory.getTabCount() - 1, _tab);
 			}	
 				
@@ -172,7 +178,8 @@ public class Customer extends BasicFrame {
 		JPanel pSouth = new JPanel(new BorderLayout());
 		pSouth.setPreferredSize(new Dimension(getWidth(), getHeight() / 3));
 		
-		pSouth.add(new OrderPanel(getWidth(), getHeight()));
+		// 주문 목록 관련 패널 등록
+		pSouth.add(new JBOrderPanel(getWidth(), getHeight()));
 		add(pSouth, BorderLayout.SOUTH);
 	}
 
@@ -188,6 +195,6 @@ public class Customer extends BasicFrame {
 		// 이곳은 프로그램 실행을 위한 메인함수만 작성하도록 합니다.
 		
 		// 커스토머용 프로그램 시작
-		new Customer(" JavaBean 1.0.5v - 카페에 오신걸 환영합니다.", 500, 700);
+		new Customer(" JavaBean 1.0.7v - 카페에 오신걸 환영합니다.", 640, 800);
 	}
 }

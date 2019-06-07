@@ -37,12 +37,14 @@ public class JBItemPanel extends JPanel implements ActionListener {
 	private String category;
 	private String name;
 	private String price;
+	private boolean isSell;
 	
 	private JSONObject option;
 
 	// 초기화 완료 여부
 	private boolean isInit;
 	
+	// 수량 추가, 감소 버
 	private JButton bQuantityMinus;
 	private JButton bQuantityPlus;
 	
@@ -55,7 +57,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 	 * @param _height
 	 */
 	@SuppressWarnings("unchecked")
-	public JBItemPanel(String _category, String _name, String _price, int _width, int _height) {
+	public JBItemPanel(String _category, String _name, String _price, boolean _isSell, int _width, int _height) {
 		
 		// 기본 레이아웃 설정
 		setLayout(new BorderLayout());
@@ -64,6 +66,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		category = _category;
 		name = _name;
 		price = _price;
+		isSell = _isSell;
 		
 		width = _width;
 		height = _height;
@@ -144,12 +147,17 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		JPanel pWest = new JPanel();
 		
 		// 이미지 파일 검사를 위한 객체 생성
-		File fIcon = new File("img/category/" + category + "/" + name + ".png");
+		File fIcon = new File((isSell) ? 
+				("img/category/" + category + "/" + name + ".png") :
+				("img/category/" + category + "/" + name + "_sold_out.png")
+		);
 		
 		// 로고 이미지 생성
-		Image iLogo = new ImageIcon(
-				(!fIcon.exists()) ? ("img/category/" + category + "/logo.png") :
-					("img/category/" + category + "/" + name + ".png")
+		Image iLogo = new ImageIcon((!fIcon.exists()) ? 
+				((isSell) ? ("img/category/" + category + "/logo.png") :
+				("img/category/" + category + "/logo_sold_out.png")) :
+				((isSell) ? ("img/category/" + category + "/" + name + ".png") :
+				("img/category/" + category + "/" + name + "_sold_out.png"))
 		).getImage();
 		
 		// 이미지 사이즈 조절 후 등록
@@ -202,13 +210,15 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		// cbTemp에 아이템 등록 
 		// Ex) [ "ICE", "HOT" ]
-		for (Object _temp : option.keySet().toArray()) {
-			cbTemp.addItem(_temp.toString());
+		if (isSell) {
+			for (Object _temp : option.keySet().toArray()) {
+				cbTemp.addItem(_temp.toString());
+			}
+			
+			// cbTemp에 이벤트 처리기 등록
+			cbTemp.addActionListener(this);
 		}
-		
-		// cbTemp에 이벤트 처리기 등록
-		cbTemp.addActionListener(this);
-		
+		else { cbTemp.setEditable(false); }
 					
 					
 		// 사이즈 선택을 위한 관련 컴포넌트 선언
@@ -221,8 +231,13 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		cbSize.setBounds(80, 73, 85, 20);
 		((JLabel) cbSize.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		
+		
 		// 사이즈 선택 시 가격 재표기 이벤트 등록
-		cbSize.addActionListener(this);
+		if (isSell) {
+			cbSize.addActionListener(this);
+		}
+		else { cbSize.setEditable(false); }
+		
 		
 		// 기본 사이즈로 가장 작은 사이즈를 선택
 		setInitDefaultSize();
@@ -244,9 +259,11 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		bQuantityMinus.setForeground(Color.WHITE);
 		
 		// 버튼 클릭시 수량 감소
-		bQuantityMinus.addActionListener(this);
+		if (isSell) {
+			bQuantityMinus.addActionListener(this);
+		}
+		else { bQuantityMinus.setEnabled(false); }
 		
-		// model & view & controller
 		
 		// 수량 표기 레이블
 		lQuantity = new JLabel("0");
@@ -264,7 +281,10 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		bQuantityPlus.setForeground(Color.WHITE);
 		
 		// 버튼 클릭시 수량 증가
-		bQuantityPlus.addActionListener(this);
+		if (isSell) {
+			bQuantityPlus.addActionListener(this);
+		}
+		else { bQuantityPlus.setEnabled(false); }
 					
 		
 		/*
@@ -316,7 +336,11 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		bOrder.setForeground(Color.DARK_GRAY);
 		
 		// 버튼 클릭시 이벤트 처리
-		bOrder.addActionListener(this);
+		if (isSell) {
+			bOrder.addActionListener(this);
+		}
+		else { bOrder.setEnabled(false); }
+		
 		
 		// 버튼 등록
 		pEast.add(bOrder, BorderLayout.CENTER);

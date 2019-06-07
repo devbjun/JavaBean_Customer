@@ -35,7 +35,7 @@ public class JBCategoryPanel extends JScrollPane {
 				pItemList.add(
 					new JBItemPanel(
 						_name,
-						_json.get("품명").toString(), _json.get("단가").toString(),
+						_json.get("품명").toString(), _json.get("단가").toString(),_json.get("상태").toString().equals("0"),
 						_width,
 						_height
 					)

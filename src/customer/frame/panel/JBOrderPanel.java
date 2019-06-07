@@ -258,6 +258,31 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 	 * @param _item
 	 */
 	public void setRow(String[] _item) {
+		
+		// 테이블 열 구조
+		// "품명", "핫 / 아이스", "사이즈", "단가", "옵션 단가", "수량", "합계"	
+		int _flags;
+		for (int i = 0; i < mTable.getRowCount(); i++) {
+			
+			// 반복문으로 검사 전, 플래그를 초기화한다.
+			_flags = 0;
+			
+			// 반복문을 돌리며 값이 동일할 경우 플래그의 값을 추가해준다.
+			// 검사를 위한 조건은 품명, 옵션, 사이즈 3가지뿐이므로 전부 돌리지 않고 3번만 돌리도록 처리한다.
+			for (int j = 0; j < 3; j++)
+				_flags += (mTable.getValueAt(i, j).equals(_item[j])) ? 1 : 0;
+			
+			
+			// 품명, 옵션, 사이즈가 모두 동일할 경우, 수량과 합계를 기존 테이블에서 검색해추가해준다. 
+			// 추가 후 함수를 종료하여, 해당 _item에 저장된 배열이 테이블에 추가되지 않도록 한다.
+			if (_flags == 3) {
+				mTable.setValueAt((Integer.parseInt(mTable.getValueAt(i, 5).toString()) + Integer.parseInt(_item[5])), i, 5);
+				mTable.setValueAt((Integer.parseInt(mTable.getValueAt(i, 6).toString()) + Integer.parseInt(_item[6])), i, 6);
+				return;
+			}
+		}
+		
+		// 위 조건에 부합하지 않는 새로운 타입의 주문인 경우, 테이블에 주문 정보를 추가한다.
 		mTable.addRow(_item);
 	}
 	

@@ -440,7 +440,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 			item[3] = price;
 			item[4] = ((JSONObject) option.get(cbTemp.getSelectedItem().toString())).get(item[2]).toString();
 			item[5] = lQuantity.getText();
-			item[6] = String.valueOf((Integer.parseInt(item[3]) + Integer.parseInt(item[4])) * Integer.parseInt(item[5]));
+			item[6] = String.valueOf((Integer.parseInt(item[3].toString()) + Integer.parseInt(item[4].toString())) * Integer.parseInt(item[5].toString()));
 
 			// 주문 클래스에 작업 설정
 			JBOrderPanel pOrder = new JBOrderPanel();

@@ -25,7 +25,6 @@ public class JBTableCellRenderer extends DefaultTableCellRenderer {
 		
 		// 정렬 정보 설정
 		cAlign = _cAlign;
-		
 	}
 	
 	// 테이블 셀 설정

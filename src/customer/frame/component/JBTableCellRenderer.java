@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
 /**
  * 테이블 헤더 및 셀 디자인 설정 클래스 선언
  */

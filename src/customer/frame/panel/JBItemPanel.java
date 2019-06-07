@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -142,8 +143,14 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		JPanel pWest = new JPanel();
 		
+		// 이미지 파일 검사를 위한 객체 생성
+		File fIcon = new File("img/category/" + category + "/" + name + ".png");
+		
 		// 로고 이미지 생성
-		Image iLogo = new ImageIcon("img/category/" + category + ".png").getImage();
+		Image iLogo = new ImageIcon(
+				(!fIcon.exists()) ? ("img/category/" + category + "/logo.png") :
+					("img/category/" + category + "/" + name + ".png")
+		).getImage();
 		
 		// 이미지 사이즈 조절 후 등록
 		JLabel lLogo = new JLabel();

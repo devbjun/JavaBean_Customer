@@ -168,7 +168,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		pWest.setOpaque(true);
 		pWest.setBackground(Color.DARK_GRAY);
 		pWest.setPreferredSize(new Dimension(width / 3, height));
-		pWest.setBorder(BorderFactory.createEmptyBorder(-7, 0, 5, 20));
+		pWest.setBorder(BorderFactory.createEmptyBorder(3, 0, 5, 20));
 		
 		// 판넬 등록
 		pWest.add(lLogo, BorderLayout.CENTER);
@@ -189,7 +189,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		// 이름 표기를 위한 컴포넌트 선언
 		JLabel lName = new JLabel(name + "   /   " + price + " 원");
-		lName.setBounds(0, 13, width / 2, 20);
+		lName.setBounds(0, 20, width / 2, 20);
 		lName.setForeground(Color.WHITE);
 		
 		
@@ -200,12 +200,12 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		// 핫 & 아이스 선택을 위한 관련 컴포넌트 선언
 		JLabel lTemp = new JLabel("핫 / 아이스");
-		lTemp.setBounds(0, 43, 70, 20);
+		lTemp.setBounds(0, 50, 70, 20);
 		lTemp.setForeground(Color.WHITE);
 					
 		// 옵션 콤보박스 선언 및 가운데 정렬 설정
 		cbTemp = new JComboBox<String>();
-		cbTemp.setBounds(80, 43, 85, 20);
+		cbTemp.setBounds(80, 50, 85, 20);
 		((JLabel) cbTemp.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		
 		// cbTemp에 아이템 등록 
@@ -223,12 +223,12 @@ public class JBItemPanel extends JPanel implements ActionListener {
 					
 		// 사이즈 선택을 위한 관련 컴포넌트 선언
 		JLabel lSize = new JLabel("사이즈");
-		lSize.setBounds(0, 73, 60, 20);
+		lSize.setBounds(0, 80, 60, 20);
 		lSize.setForeground(Color.WHITE);
 		
 		// 사이즈 콤보박스 선언 및 가운데 정렬 설정
 		cbSize = new JComboBox<String>();
-		cbSize.setBounds(80, 73, 85, 20);
+		cbSize.setBounds(80, 80, 85, 20);
 		((JLabel) cbSize.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		
 		
@@ -245,12 +245,12 @@ public class JBItemPanel extends JPanel implements ActionListener {
 					
 		// 수량 선택 관련 컴포넌트 추가 
 		JLabel lQuantityName = new JLabel("수량");
-		lQuantityName.setBounds(0, 103, 50, 20);
+		lQuantityName.setBounds(0, 110, 50, 20);
 		lQuantityName.setForeground(Color.WHITE);
 		
 		// 수량 감소 버튼
 		bQuantityMinus = new JButton("-");
-		bQuantityMinus.setBounds(72, 103, 20, 20);
+		bQuantityMinus.setBounds(72, 110, 20, 20);
 		
 		// 디자인 설정
 		bQuantityMinus.setBorder(null);
@@ -267,12 +267,12 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		// 수량 표기 레이블
 		lQuantity = new JLabel("0");
-		lQuantity.setBounds(118, 103, 20, 20);
+		lQuantity.setBounds(118, 110, 20, 20);
 		lQuantity.setForeground(Color.WHITE);
 		
 		// 수량 증가 버튼
 		bQuantityPlus = new JButton("+");
-		bQuantityPlus.setBounds(148, 103, 20, 20);
+		bQuantityPlus.setBounds(148, 110, 20, 20);
 		
 		// 디자인 설정
 		bQuantityPlus.setBorder(null);

@@ -21,7 +21,7 @@ public class JBCategoryPanel extends JScrollPane {
 	private JPanel pItemList;
 	
 	public JBCategoryPanel(String _name, int _width, int _height) {
-        
+		
         // 오류 처리
         try {
         	

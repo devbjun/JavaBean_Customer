@@ -144,6 +144,15 @@ public class Customer extends BasicFrame {
 				tpCategory.add(new JBCategoryPanel(_json.get("카테고리").toString(), getWidth() / 5 * 4, getHeight() / 5));
 				tpCategory.setTabComponentAt(tpCategory.getTabCount() - 1, _tab);
 			}	
+			
+			// 탭 변경 시 이벤트 처리 추가
+			tpCategory.addChangeListener((e) -> {
+				
+				// 아이템 상태 갱신을 위해 카테고리 패널을 새롭게 다시 등록한다.
+				JLabel _tOld = (JLabel) tpCategory.getTabComponentAt(tpCategory.getSelectedIndex());
+				tpCategory.setComponentAt(tpCategory.getSelectedIndex(), new JBCategoryPanel(_tOld.getText(), getWidth() / 5 * 4, getHeight() / 5));
+				
+			});
 				
 		// 예외처리
 		} catch (Exception e) {

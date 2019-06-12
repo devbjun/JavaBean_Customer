@@ -26,6 +26,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.json.simple.JSONObject;
 
+import customer.frame.JBReceiptFrame;
 import customer.frame.component.JBTableCellRenderer;
 import customer.frame.model.JBOrderDefaultTableModel;
 
@@ -380,21 +381,16 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 				// 오류 처리
 				try {
 					
-					// 주문을 접수하고 주문 번호를 받아온다.
-					String nOrder = Customers.setOrders(_list);
+					// 주문을 접수하고 주문 접수 결과를 받아온다.
+					String[] _iOrder = Customers.setOrders(_list);
+					
+					// 결과를 영수증으로 출력한다.
+					new JBReceiptFrame("JavaBean - 영수증", 440, 700, _iOrder, mTable);
 					
 					// --로 할 경우 동작
 					for (int _r = mTable.getRowCount() - 1; _r > -1; _r--)
 						mTable.removeRow(_r);
-					
-					// 주문번호 안내
-					JOptionPane.showConfirmDialog(null, 
-							"주문이 성공적으로 완료되었습니다.\n\n" +
-							"※주문번호: " + nOrder, 
-							"JavaBean - 주문 완료",
-							JOptionPane.DEFAULT_OPTION,
-							JOptionPane.INFORMATION_MESSAGE);
-					
+
 				// 예외 처리
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block

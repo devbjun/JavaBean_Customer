@@ -131,9 +131,9 @@ public class JBReceiptFrame extends BasicFrame {
 		taReceipt.append("\n");
 		taReceipt.append("주문번호: " + iOrder[0] + "\n");
 		taReceipt.append("\n");
-		taReceipt.append("-------------------------------------------------------\n");
-		taReceipt.append(String.format("%-24s\t%8s\t%8s\t%10s\n", "품명", "단가", "수량", "금액"));
-		taReceipt.append("-------------------------------------------------------\n");
+		taReceipt.append("─────────────────────────────────────────────────────────────\n");
+		taReceipt.append(String.format("%-20s\t%6s\t%6s\t%8s\n", "품명", "단가", "수량", "금액"));
+		taReceipt.append("─────────────────────────────────────────────────────────────\n");
 		
 		// 영수증 물품 내역 출력
 		int _pTotal = 0;
@@ -154,17 +154,17 @@ public class JBReceiptFrame extends BasicFrame {
 		}
 		
 		// 영수증 나머지 부분 출력
-		taReceipt.append("-------------------------------------------------------\n");
-		taReceipt.append(String.format("%-40s\t\t\t%,8d\n", "주 문 합 계:", _pTotal));
+		taReceipt.append("─────────────────────────────────────────────────────────────\n");
+		taReceipt.append(String.format("%-40s\t\t%,8d\n", "주 문 합 계:", _pTotal));
 		taReceipt.append(String.format("%-40s\t\t%,8d\n", "공급가금액:", (_pTotal / 11 * 10)));
-		taReceipt.append(String.format("%-40s\t\t\t%,8d\n", "부  가  세:", (_pTotal - (_pTotal / 11 * 10))));
-		taReceipt.append("-------------------------------------------------------\n");
-		taReceipt.append(String.format("%-40s\t\t\t%,8d\n", "합 계 금 액:", _pTotal));
-		taReceipt.append("-------------------------------------------------------\n");
+		taReceipt.append(String.format("%-40s\t\t%,8d\n", "부  가  세:", (_pTotal - (_pTotal / 11 * 10))));
+		taReceipt.append("─────────────────────────────────────────────────────────────\n");
+		taReceipt.append(String.format("%-40s\t\t%,8d\n", "합 계 금 액:", _pTotal));
+		taReceipt.append("─────────────────────────────────────────────────────────────\n");
 		taReceipt.append(String.format("%-48s\t%21s\n", "승 인 번 호:", iOrder[1]));
-		taReceipt.append(String.format("%-40s\t\t\t%,8d\n", "승 인 금 액:", _pTotal));
-		taReceipt.append(String.format("%-24s\t%42s\n", "결 제 일 시:", sFormat[1].format(new Date(Long.parseLong(iOrder[1]) / 1000))));
-		taReceipt.append("-------------------------------------------------------\n");
+		taReceipt.append(String.format("%-38s\t\t%,8d\n", "승 인 금 액:", _pTotal));
+		taReceipt.append(String.format("%-24s\t%41s\n", "결 제 일 시:", sFormat[1].format(new Date(Long.parseLong(iOrder[1]) / 1000))));
+		taReceipt.append("─────────────────────────────────────────────────────────────\n");
 		taReceipt.append("자바빈을 이용해주셔서 감사합니다.\n\n\n");
 		
 		
@@ -204,7 +204,7 @@ public class JBReceiptFrame extends BasicFrame {
 		
 		// 저장 버튼 및 사이즈 조절
 		JButton bSave = new JButton("저장");
-		bSave.setPreferredSize(new Dimension(getWidth(), getHeight() / 15 + 10));
+		bSave.setPreferredSize(new Dimension(getWidth(), getHeight() / 15));
 		
 		// 버튼 이벤트 등록
 		bSave.addActionListener((e)->{
@@ -212,7 +212,7 @@ public class JBReceiptFrame extends BasicFrame {
 			// 스크린샷을 찍기 위해 가상 프레임을 생성한다.
 			BasicFrame fVirtual = new BasicFrame(
 					"JavaBean - Virtual Screen",
-					taReceipt.getPreferredSize().width,
+					taReceipt.getPreferredSize().width + 20,
 					pLogo.getPreferredSize().height + 
 					taReceipt.getPreferredSize().height);
 			
@@ -226,8 +226,8 @@ public class JBReceiptFrame extends BasicFrame {
 			
 			// 이미지 저장을 위한 객체 생성
 			BufferedImage image = new BufferedImage(
-					fVirtual.getWidth(),
-					fVirtual.getHeight() - 20,
+					fVirtual.getWidth() - 20,
+					fVirtual.getHeight() - 35,
 				    BufferedImage.TYPE_INT_RGB
 			);
 			

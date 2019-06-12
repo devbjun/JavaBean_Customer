@@ -385,7 +385,7 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 					String[] _iOrder = Customers.setOrders(_list);
 					
 					// 결과를 영수증으로 출력한다.
-					new JBReceiptFrame("JavaBean - 영수증", 440, 700, _iOrder, mTable);
+					new JBReceiptFrame("JavaBean - 영수증", 380, 700, _iOrder, mTable);
 					
 					// --로 할 경우 동작
 					for (int _r = mTable.getRowCount() - 1; _r > -1; _r--)

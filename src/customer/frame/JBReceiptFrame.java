@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,6 +26,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import customer.Customer;
 import customer.frame.component.JBScrollBar;
 import customer.frame.model.JBOrderDefaultTableModel;
 
@@ -56,8 +59,11 @@ public class JBReceiptFrame extends BasicFrame {
 		iOrder = _iOrder;
 		lOrder = _lOrder;
 		
+		// 아이콘 설정
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Customer.pIcon));
+		
 		// 창 닫을 시, 해당 창만 종료되도록 변경
-		setDefaultCloseOperation(HIDE_ON_CLOSE);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		// 레이아웃 설정 및 배경 설정
 		setLayout(new BorderLayout());
@@ -98,7 +104,7 @@ public class JBReceiptFrame extends BasicFrame {
 		);
 		
 		// 스크롤 패널 사이즈 설정
-		spBody.setPreferredSize(new Dimension(getWidth(), getHeight() / 15 * 11 + 5));
+		spBody.setPreferredSize(new Dimension(getWidth(), getHeight() / 15 * 11 - 5));
 		
 		// 세로 스크롤바 감춤 상태에서 스크롤 가능하게끔 처리
 		spBody.setVerticalScrollBar(new JBScrollBar(JScrollBar.VERTICAL));
@@ -132,18 +138,18 @@ public class JBReceiptFrame extends BasicFrame {
 		taReceipt.append("주문번호: " + iOrder[0] + "\n");
 		taReceipt.append("\n");
 		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-20s\t%6s\t%6s\t%8s\n", "품명", "단가", "수량", "금액"));
+		taReceipt.append(String.format("%-24s\t%6s\t%6s\t%8s\n", "품명", "단가", "수량", "금액"));
 		taReceipt.append("─────────────────────────────────────────────────────────────\n");
 		
 		// 영수증 물품 내역 출력
 		int _pTotal = 0;
 		for (int _r = 0; _r < lOrder.getRowCount(); _r++) {
-			taReceipt.append(String.format("%-24s\t%,8d\t%,8d\t%,8d\n", 
+			taReceipt.append(String.format("%-24s" + ((lOrder.getValueAt(_r, 0).toString().length() > 10) ? "" : "\t") + "%,8d\t%,8d\t%,7d\n", 
 					lOrder.getValueAt(_r, 0).toString(), 
 					Integer.parseInt(lOrder.getValueAt(_r, 3).toString()),
 					Integer.parseInt(lOrder.getValueAt(_r, 5).toString()),
 					Integer.parseInt(lOrder.getValueAt(_r, 5).toString()) * Integer.parseInt(lOrder.getValueAt(_r, 3).toString())));
-			taReceipt.append(String.format("%24s\t%,8d\t%,8d\t%,8d\n", 
+			taReceipt.append(String.format("%24s\t%,8d\t%,8d\t%,7d\n", 
 					lOrder.getValueAt(_r, 1).toString() + " & " + lOrder.getValueAt(_r, 2).toString(), 
 					Integer.parseInt(lOrder.getValueAt(_r, 4).toString()),
 					Integer.parseInt(lOrder.getValueAt(_r, 5).toString()),
@@ -155,15 +161,15 @@ public class JBReceiptFrame extends BasicFrame {
 		
 		// 영수증 나머지 부분 출력
 		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-40s\t\t%,8d\n", "주 문 합 계:", _pTotal));
-		taReceipt.append(String.format("%-40s\t\t%,8d\n", "공급가금액:", (_pTotal / 11 * 10)));
-		taReceipt.append(String.format("%-40s\t\t%,8d\n", "부  가  세:", (_pTotal - (_pTotal / 11 * 10))));
+		taReceipt.append(String.format("%-40s\t\t\t%,7d\n", "주 문 합 계:", _pTotal));
+		taReceipt.append(String.format("%-40s\t\t%,7d\n", "공급가금액:", (_pTotal / 11 * 10)));
+		taReceipt.append(String.format("%-40s\t\t\t%,8d\n", "부  가  세:", (_pTotal - (_pTotal / 11 * 10))));
 		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-40s\t\t%,8d\n", "합 계 금 액:", _pTotal));
+		taReceipt.append(String.format("%-40s\t\t\t%,7d\n", "합 계 금 액:", _pTotal));
 		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-48s\t%21s\n", "승 인 번 호:", iOrder[1]));
-		taReceipt.append(String.format("%-38s\t\t%,8d\n", "승 인 금 액:", _pTotal));
-		taReceipt.append(String.format("%-24s\t%41s\n", "결 제 일 시:", sFormat[1].format(new Date(Long.parseLong(iOrder[1]) / 1000))));
+		taReceipt.append(String.format("%-48s\t%18s\n", "승 인 번 호:", iOrder[1]));
+		taReceipt.append(String.format("%-40s\t\t\t%,7d\n", "승 인 금 액:", _pTotal));
+		taReceipt.append(String.format("%-24s\t%40s\n", "결 제 일 시:", sFormat[1].format(new Date(Long.parseLong(iOrder[1]) / 1000))));
 		taReceipt.append("─────────────────────────────────────────────────────────────\n");
 		taReceipt.append("자바빈을 이용해주셔서 감사합니다.\n\n\n");
 		
@@ -204,7 +210,7 @@ public class JBReceiptFrame extends BasicFrame {
 		
 		// 저장 버튼 및 사이즈 조절
 		JButton bSave = new JButton("저장");
-		bSave.setPreferredSize(new Dimension(getWidth(), getHeight() / 15));
+		bSave.setPreferredSize(new Dimension(getWidth(), getHeight() / 15 + 3));
 		
 		// 버튼 이벤트 등록
 		bSave.addActionListener((e)->{
@@ -219,22 +225,23 @@ public class JBReceiptFrame extends BasicFrame {
 			// 레이아웃 및 배경 설정
 			fVirtual.setLayout(new BorderLayout());
 			fVirtual.setBackground(Color.DARK_GRAY);
+			fVirtual.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			
 			// 컴포넌트 등록
 			fVirtual.add(pLogo, BorderLayout.NORTH);
-			fVirtual.add(taReceipt, BorderLayout.CENTER);
+			fVirtual.add(spBody, BorderLayout.CENTER);
 			
 			// 이미지 저장을 위한 객체 생성
 			BufferedImage image = new BufferedImage(
-					fVirtual.getWidth() - 20,
-					fVirtual.getHeight() - 35,
+					fVirtual.getWidth() - 21,
+					fVirtual.getHeight() - 38,
 				    BufferedImage.TYPE_INT_RGB
 			);
 			
 			// 스크린샷을 위해 프레임을 표시한 후, 다시 숨김처리한다.
 			fVirtual.setVisible(true);
 			fVirtual.getContentPane().paint(image.getGraphics());
-			fVirtual.setVisible(false);
+			fVirtual.dispose();
 			
 			// 오류 처리
             try {
@@ -243,7 +250,7 @@ public class JBReceiptFrame extends BasicFrame {
     			JFileChooser fcPath = new JFileChooser();
             	
             	// 다중 설정 불가 및 저장 확장자 설정
-            	fcPath.setFileFilter(new FileNameExtensionFilter("png", "png"));
+            	fcPath.setFileFilter(new FileNameExtensionFilter("png", ".png"));
     			fcPath.setMultiSelectionEnabled(false);
             	
             	// 경로 설정 창
@@ -263,8 +270,23 @@ public class JBReceiptFrame extends BasicFrame {
 						JOptionPane.INFORMATION_MESSAGE);
 					
 					// 해당 창 닫기
-					setVisible(false);
-
+					dispose();
+            	}
+            	else {
+            		
+            		// 화면 갱신을 위한 처리
+            		// 화면 갱신을 하지 않을 경우, 스크롤이 먹히지 않는다.
+            		
+            		// 패널 제거
+            		remove(pBody);
+            		
+            		// 패널에 컴포넌트 재등록
+        			pBody.add(pLogo, BorderLayout.NORTH);
+        			pBody.add(spBody, BorderLayout.CENTER);
+        			add(pBody, BorderLayout.NORTH);
+        			
+        			// 화면 갱신
+        			revalidate();
             	}
             
             // 에러 처리

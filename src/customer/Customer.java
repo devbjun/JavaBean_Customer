@@ -30,7 +30,7 @@ import jdbc.oracle.customer.Items;
 @SuppressWarnings("serial")
 public class Customer extends BasicFrame {
 	
-	private static String pIcon = "img/icon/java_bean.png";
+	public static String pIcon = "img/icon/java_bean.png";
 	private JTabbedPane tpCategory;
 
 	/**

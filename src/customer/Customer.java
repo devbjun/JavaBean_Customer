@@ -3,6 +3,7 @@ package customer;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -143,7 +144,10 @@ public class Customer extends BasicFrame {
 				// 카테고리 탭 팬에 탭 및 패널 추가
 				tpCategory.add(new JBCategoryPanel(_json.get("카테고리").toString(), getWidth() / 5 * 4, getHeight() / 5));
 				tpCategory.setTabComponentAt(tpCategory.getTabCount() - 1, _tab);
-			}	
+				
+				// 카테고리 탭 폰트 설정
+				tpCategory.getTabComponentAt(tpCategory.getTabCount() - 1).setFont(new Font("맑은 고딕", Font.BOLD, 12));
+			}
 			
 			// 탭 변경 시 이벤트 처리 추가
 			tpCategory.addChangeListener((e) -> {

@@ -3,6 +3,7 @@ package customer.frame.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -161,9 +162,11 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 		lTotal = new JLabel("주문 합계:    0 원");
 		lTotal.setHorizontalAlignment(JLabel.RIGHT);
 		
+		// 디자인
 		lTotal.setBounds(width - 160, 2, 140, 15);
 		lTotal.setBackground(Color.DARK_GRAY);
 		lTotal.setForeground(Color.WHITE);
+		lTotal.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		
 		
 		// 패널에 테이블 및 레이블 추가
@@ -201,7 +204,6 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 		bReset.setBackground(Color.WHITE);
 		bReset.setForeground(Color.DARK_GRAY);
 		
-		
 		/*
 		 * 초기화 버튼 이벤트 등록 
 		 */
@@ -217,6 +219,7 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 		bDelete.setFocusable(false);
 		bDelete.setBackground(Color.WHITE);
 		bDelete.setForeground(Color.DARK_GRAY);
+		bDelete.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
 		
 		/*
@@ -234,6 +237,7 @@ public class JBOrderPanel extends JPanel implements ActionListener, TableModelLi
 		bOrder.setFocusable(false);
 		bOrder.setBackground(Color.WHITE);
 		bOrder.setForeground(Color.DARK_GRAY);
+		bOrder.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
 		
 		/*

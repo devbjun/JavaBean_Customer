@@ -3,6 +3,7 @@ package customer.frame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -116,13 +117,16 @@ public class JBReceiptFrame extends BasicFrame {
 				new SimpleDateFormat("yyyy-MM-dd a hh:mm:ss")
 		};
 		
+		// 폰트 설정
+		taReceipt.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+		
 		// 수정 불가하게 설정
 		taReceipt.setEditable(false);
 		
 		// 영수증 상단 부분 출력
 		taReceipt.append("#001 자바빈 인하대점\n");
 		taReceipt.append("\n");
-		taReceipt.append("대 표 자: 자바빈 프리푸치노\n");
+		taReceipt.append("대 표 자: 자바빈 프라푸치노\n");
 		taReceipt.append("주소: 인천 남구 인하로\n");
 		taReceipt.append("\n");
 		taReceipt.append("\n");
@@ -137,19 +141,19 @@ public class JBReceiptFrame extends BasicFrame {
 		taReceipt.append("\n");
 		taReceipt.append("주문번호: " + iOrder[0] + "\n");
 		taReceipt.append("\n");
-		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-24s\t%6s\t%6s\t%8s\n", "품명", "단가", "수량", "금액"));
-		taReceipt.append("─────────────────────────────────────────────────────────────\n");
+		taReceipt.append("───────────────────────────────\n");
+		taReceipt.append(String.format("%-24s\t%6s%15s%13s\n", "품명", "단가", "수량", "금액"));
+		taReceipt.append("───────────────────────────────\n");
 		
 		// 영수증 물품 내역 출력
 		int _pTotal = 0;
 		for (int _r = 0; _r < lOrder.getRowCount(); _r++) {
-			taReceipt.append(String.format("%-24s" + ((lOrder.getValueAt(_r, 0).toString().length() > 10) ? "" : "\t") + "%,8d\t%,8d\t%,7d\n", 
+			taReceipt.append(String.format("%-24s" + ((lOrder.getValueAt(_r, 0).toString().length() > 10) ? "" : "\t") + "%,8d\t%,4d%,16d\n", 
 					lOrder.getValueAt(_r, 0).toString(), 
 					Integer.parseInt(lOrder.getValueAt(_r, 3).toString()),
 					Integer.parseInt(lOrder.getValueAt(_r, 5).toString()),
 					Integer.parseInt(lOrder.getValueAt(_r, 5).toString()) * Integer.parseInt(lOrder.getValueAt(_r, 3).toString())));
-			taReceipt.append(String.format("%24s\t%,8d\t%,8d\t%,7d\n", 
+			taReceipt.append(String.format("%24s\t%,8d\t%,4d%,16d\n", 
 					lOrder.getValueAt(_r, 1).toString() + " & " + lOrder.getValueAt(_r, 2).toString(), 
 					Integer.parseInt(lOrder.getValueAt(_r, 4).toString()),
 					Integer.parseInt(lOrder.getValueAt(_r, 5).toString()),
@@ -160,17 +164,17 @@ public class JBReceiptFrame extends BasicFrame {
 		}
 		
 		// 영수증 나머지 부분 출력
-		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-40s\t\t\t%,7d\n", "주 문 합 계:", _pTotal));
-		taReceipt.append(String.format("%-40s\t\t%,7d\n", "공급가금액:", (_pTotal / 11 * 10)));
-		taReceipt.append(String.format("%-40s\t\t\t%,8d\n", "부  가  세:", (_pTotal - (_pTotal / 11 * 10))));
-		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-40s\t\t\t%,7d\n", "합 계 금 액:", _pTotal));
-		taReceipt.append("─────────────────────────────────────────────────────────────\n");
-		taReceipt.append(String.format("%-48s\t%18s\n", "승 인 번 호:", iOrder[1]));
-		taReceipt.append(String.format("%-40s\t\t\t%,7d\n", "승 인 금 액:", _pTotal));
-		taReceipt.append(String.format("%-24s\t%40s\n", "결 제 일 시:", sFormat[1].format(new Date(Long.parseLong(iOrder[1]) / 1000))));
-		taReceipt.append("─────────────────────────────────────────────────────────────\n");
+		taReceipt.append("───────────────────────────────\n");
+		taReceipt.append(String.format("%-40s\t%,21d\n", "주 문 합 계:", _pTotal));
+		taReceipt.append(String.format("%-40s\t%,21d\n", "공급가금액:", (_pTotal / 11 * 10)));
+		taReceipt.append(String.format("%-40s\t%,21d\n", "부  가  세:", (_pTotal - (_pTotal / 11 * 10))));
+		taReceipt.append("───────────────────────────────\n");
+		taReceipt.append(String.format("%-40s\t%,21d\n", "합 계 금 액:", _pTotal));
+		taReceipt.append("───────────────────────────────\n");
+		taReceipt.append(String.format("%-48s%23s\n", "승 인 번 호:", iOrder[1]));
+		taReceipt.append(String.format("%-40s\t%,21d\n", "승 인 금 액:", _pTotal));
+		taReceipt.append(String.format("%-24s%44s\n", "결 제 일 시:", sFormat[1].format(new Date(Long.parseLong(iOrder[1]) / 1000))));
+		taReceipt.append("───────────────────────────────\n");
 		taReceipt.append("자바빈을 이용해주셔서 감사합니다.\n\n\n");
 		
 		
@@ -210,7 +214,10 @@ public class JBReceiptFrame extends BasicFrame {
 		
 		// 저장 버튼 및 사이즈 조절
 		JButton bSave = new JButton("저장");
+		
+		bSave.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		bSave.setPreferredSize(new Dimension(getWidth(), getHeight() / 15 + 3));
+		
 		
 		// 버튼 이벤트 등록
 		bSave.addActionListener((e)->{

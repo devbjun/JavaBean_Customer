@@ -3,6 +3,7 @@ package customer.frame.panel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -188,7 +189,10 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		 */
 		
 		// 이름 표기를 위한 컴포넌트 선언
-		JLabel lName = new JLabel(name + "   /   " + price + " 원");
+		JLabel lName = new JLabel(name + "  /  " + price + " 원");
+		
+		// 디자인 설정
+		lName.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		lName.setBounds(0, 20, width / 2, 20);
 		lName.setForeground(Color.WHITE);
 		
@@ -200,12 +204,18 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		// 핫 & 아이스 선택을 위한 관련 컴포넌트 선언
 		JLabel lTemp = new JLabel("핫 / 아이스");
+		
+		// 디자인 설정
+		lTemp.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		lTemp.setBounds(0, 50, 70, 20);
 		lTemp.setForeground(Color.WHITE);
 					
 		// 옵션 콤보박스 선언 및 가운데 정렬 설정
 		cbTemp = new JComboBox<String>();
+		
+		// 디자인 설정
 		cbTemp.setBounds(80, 50, 85, 20);
+		cbTemp.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		((JLabel) cbTemp.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
 		
 		// cbTemp에 아이템 등록 
@@ -223,13 +233,20 @@ public class JBItemPanel extends JPanel implements ActionListener {
 					
 		// 사이즈 선택을 위한 관련 컴포넌트 선언
 		JLabel lSize = new JLabel("사이즈");
+		
+		// 디자인 설정
+		lSize.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		lSize.setBounds(0, 80, 60, 20);
 		lSize.setForeground(Color.WHITE);
 		
 		// 사이즈 콤보박스 선언 및 가운데 정렬 설정
 		cbSize = new JComboBox<String>();
+		
+		// 디자인 설정
 		cbSize.setBounds(80, 80, 85, 20);
+		cbSize.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		((JLabel) cbSize.getRenderer()).setHorizontalAlignment(JLabel.CENTER);
+		
 		
 		
 		// 사이즈 선택 시 가격 재표기 이벤트 등록
@@ -245,6 +262,9 @@ public class JBItemPanel extends JPanel implements ActionListener {
 					
 		// 수량 선택 관련 컴포넌트 추가 
 		JLabel lQuantityName = new JLabel("수량");
+		
+		// 디자인 설정
+		lQuantityName.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		lQuantityName.setBounds(0, 110, 50, 20);
 		lQuantityName.setForeground(Color.WHITE);
 		
@@ -257,6 +277,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		bQuantityMinus.setFocusable(false);
 		bQuantityMinus.setBackground(Color.DARK_GRAY);
 		bQuantityMinus.setForeground(Color.WHITE);
+		bQuantityMinus.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		
 		// 버튼 클릭시 수량 감소
 		if (isSell) {
@@ -267,8 +288,11 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		
 		// 수량 표기 레이블
 		lQuantity = new JLabel("0");
+		
+		// 디자인 설정
 		lQuantity.setBounds(118, 110, 20, 20);
 		lQuantity.setForeground(Color.WHITE);
+		lQuantity.setFont(new Font("맑은 고딕", Font.BOLD, 12));
 		
 		// 수량 증가 버튼
 		bQuantityPlus = new JButton("+");
@@ -279,6 +303,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		bQuantityPlus.setFocusable(false);
 		bQuantityPlus.setBackground(Color.DARK_GRAY);
 		bQuantityPlus.setForeground(Color.WHITE);
+		bQuantityPlus.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		
 		// 버튼 클릭시 수량 증가
 		if (isSell) {
@@ -334,6 +359,7 @@ public class JBItemPanel extends JPanel implements ActionListener {
 		bOrder.setFocusable(false);
 		bOrder.setBackground(Color.WHITE);
 		bOrder.setForeground(Color.DARK_GRAY);
+		bOrder.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		
 		// 버튼 클릭시 이벤트 처리
 		if (isSell) {

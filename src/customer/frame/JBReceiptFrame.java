@@ -124,6 +124,7 @@ public class JBReceiptFrame extends BasicFrame {
 		taReceipt.setEditable(false);
 		
 		// 영수증 상단 부분 출력
+		taReceipt.append("\n");
 		taReceipt.append("#001 자바빈 인하대점\n");
 		taReceipt.append("\n");
 		taReceipt.append("대 표 자: 자바빈 프라푸치노\n");
